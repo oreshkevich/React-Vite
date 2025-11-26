@@ -1,6 +1,9 @@
+import React from 'react';
+import styles from './Footer.module.scss';
+
 export const Footer: React.FC = () => {
   return (
-    <footer style={{padding: 20, background: '#222', color: '#fff'}}>
+    <footer className={styles.footer}>
       <p>© 2025 Все права защищены</p>
     </footer>
   );

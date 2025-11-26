@@ -1,6 +1,8 @@
+import styles from './Header.module.scss';
+
 export const Header: React.FC = () => {
   return (
-    <header style={{padding: 20, background: '#222', color: '#fff'}}>
+    <header className={styles.header}>
       <h2>My Blog</h2>
     </header>
   );
