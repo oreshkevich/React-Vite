@@ -1,5 +1,5 @@
 import {PostCard} from '@/entities/post/ui/PostCard';
-
+import {Fragment} from 'react';
 interface Post {
   id: number;
   title: string;
@@ -16,7 +16,9 @@ export const PostList: React.FC = () => {
   return (
     <div style={{display: 'grid', gap: 16}}>
       {posts.map((post) => (
-        <PostCard key={post.id} title={post.title} body={post.body} />
+        <Fragment key={post.id}>
+          <PostCard title={post.title} body={post.body} />
+        </Fragment>
       ))}
     </div>
   );
