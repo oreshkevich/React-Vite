@@ -1,0 +1,34 @@
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0 0;
+}
+
+.item {
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--card-border);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--btn-text);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.text {
+  margin-top: 8px;
+  color: var(--text-color);
+}
+
+.empty {
+  color: rgba(0, 0, 0, 0.45);
+}
