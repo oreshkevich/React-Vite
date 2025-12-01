@@ -1,0 +1,14 @@
+.list {
+  display: grid;
+  gap: 16px;
+}
+
+.cardWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comments {
+  padding-left: 8px;
+}
