@@ -1,0 +1,20 @@
+.tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.tab {
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-color);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+}
+
+.active {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-weight: 600;
+}
