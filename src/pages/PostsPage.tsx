@@ -1,10 +1,14 @@
 import React, {useMemo, useState, useEffect} from 'react';
+import styles from './PostsPage.module.scss';
+
 import {ThemeSwitcher} from '@/features/ThemeSwitcher/ui/ThemeSwitcher';
 import {PostLengthFilter} from '@/features/PostLengthFilter/ui/PostLengthFilter';
 import {filterByLength} from '@/features/PostLengthFilter/lib/filterByLength';
 import {Button} from '@/shared/ui/Button/Button';
 import {Modal} from '@/shared/ui/Modal';
 import {PostListWithLoading} from '@/widgets/PostList';
+import {UsersPanel} from '@/features/UsersPanel/ui/UsersPanel';
+import {PostsPanel} from '@/features/PostsPanel/ui/PostsPanel';
 
 interface Post {
   id: number;
@@ -12,7 +16,6 @@ interface Post {
   body: string;
   comments?: Comment[];
 }
-
 interface Comment {
   id: number;
   author: string;
@@ -35,11 +38,7 @@ const SAMPLE_POSTS: Post[] = [
     body: 'Тело поста 2',
     comments: [{id: 21, author: 'Петя', text: 'Комментарий'}],
   },
-  {
-    id: 3,
-    title: 'Средний заголовок',
-    body: 'Тело поста 3',
-  },
+  {id: 3, title: 'Средний заголовок', body: 'Тело поста 3'},
 ];
 
 export const PostsPage: React.FC = () => {
@@ -62,10 +61,22 @@ export const PostsPage: React.FC = () => {
   );
 
   return (
-    <>
+    <div className={styles.postsPage}>
       <ThemeSwitcher />
 
-      <div style={{display: 'flex', gap: 12, marginBottom: 10}}>
+      <div className={styles.gridPanels}>
+        <section>
+          <h2>Пользователи</h2>
+          <UsersPanel />
+        </section>
+
+        <section>
+          <h2>Посты</h2>
+          <PostsPanel />
+        </section>
+      </div>
+
+      <div className={styles.controls}>
         <PostLengthFilter value={minLen} onChange={setMinLen} />
         <Button onClick={() => setOpen(true)}>О проекте</Button>
       </div>
@@ -81,6 +92,6 @@ export const PostsPage: React.FC = () => {
       </Modal>
 
       <PostListWithLoading isLoading={loading} posts={filtered} />
-    </>
+    </div>
   );
 };
