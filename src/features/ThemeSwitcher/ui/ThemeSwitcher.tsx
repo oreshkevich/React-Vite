@@ -5,7 +5,7 @@ export const ThemeSwitcher = () => {
   const {theme, toggleTheme} = useTheme();
 
   return (
-    <Button onClick={toggleTheme}>
+    <Button onClick={toggleTheme} disabled={false}>
       {theme === 'light' ? '🌞 Светлая' : '🌙 Тёмная'}
     </Button>
   );

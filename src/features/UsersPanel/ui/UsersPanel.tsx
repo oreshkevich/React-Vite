@@ -1,5 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, ChangeEvent} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import {ItemList} from '@/shared/ui/ItemList/ItemList';
+import type {User} from '@/entities/user/model/types';
 import {
   usersSelectors,
   userAdded,
@@ -8,6 +10,7 @@ import {
   setLoading,
 } from '@/entities/user/model/slice/userSlice';
 import type {RootState, AppDispatch} from '@/app/providers/store/store';
+import styles from './UsersPanel.module.scss';
 
 export const UsersPanel: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,7 +24,7 @@ export const UsersPanel: React.FC = () => {
       dispatch(setLoading(true));
       setTimeout(() => dispatch(setLoading(false)), 500);
     }
-  }, []);
+  }, [dispatch, users.length]);
 
   const handleAdd = () => {
     const id = Date.now();
@@ -35,35 +38,43 @@ export const UsersPanel: React.FC = () => {
     dispatch(userRemoved(id));
   };
 
+  const handleUpdate = (user: User) => {
+    dispatch(userUpdated({...user, name: user.name + ' ✨'}));
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setName(e.target.value);
+
   return (
-    <section>
+    <section className={styles.panel}>
       <h3>Users (userSlice)</h3>
-      <div>
+
+      <div className={styles.controls}>
         <input
+          type='text'
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleChange}
           placeholder='Имя пользователя'
         />
         <button onClick={handleAdd}>Добавить</button>
       </div>
 
-      {loading ? <div>Loading...</div> : null}
+      {loading && <div>Loading...</div>}
 
-      <ul>
-        {users.map((u) => (
-          <li key={u.id}>
-            <b>{u.name}</b> — <small>{u.username}</small>
-            <button onClick={() => handleRemove(u.id)}>Удалить</button>
-            <button
-              onClick={() =>
-                dispatch(userUpdated({...u, name: u.name + ' ✨'}))
-              }
-            >
-              Апдейт
-            </button>
-          </li>
-        ))}
-      </ul>
+      <ItemList<User>
+        items={users}
+        renderItem={(user) => (
+          <div key={user.id} className={styles.userItem}>
+            <span>
+              {user.name} ({user.username})
+            </span>
+            <div className={styles.actions}>
+              <button onClick={() => handleRemove(user.id)}>Удалить</button>
+              <button onClick={() => handleUpdate(user)}>Апдейт</button>
+            </div>
+          </div>
+        )}
+      />
     </section>
   );
 };
